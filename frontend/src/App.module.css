@@ -1,0 +1,15 @@
+.success {
+  background-color: var(--chakra-colors-green-100);
+}
+
+.error {
+  background-color: var(--chakra-colors-red-100);
+}
+
+@media (min-width: 768px) {
+  .App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

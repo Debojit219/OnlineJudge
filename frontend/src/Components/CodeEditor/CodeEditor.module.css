@@ -1,0 +1,86 @@
+/* CodeEditor.container */
+.CodeEditor {
+  /* flex: 1; */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: 90%; /* Change this to 100% to occupy entire height */
+}
+
+/* CodeEditor text area */
+.CodeEditor__textarea {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  width: 100%; /* Change this to 100% to occupy entire width */
+  height: 400px; /* Set the desired height here (e.g., 400px) */
+  min-height: 0; /* Reset min-height to allow the textarea to shrink */
+}
+
+/* CodeEditor buttons */
+.CodeEditor__buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.CodeEditor__languageDropdown {
+  margin-bottom: 1rem;
+}
+
+.CodeEditor__submitButton {
+  flex: 1;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #3182ce;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.CodeEditor__submitButton:hover {
+  background-color: #2765b0;
+}
+
+.CodeEditor__runButton {
+  flex: 1;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #3182ce;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #3182ce;
+  cursor: pointer;
+  margin-right: 1rem;
+  transition: background-color 0.2s;
+}
+
+.CodeEditor__runButton:hover {
+  background-color: #f0f4ff;
+}
+
+
+/* Styles for the output section */
+.CodeEditor__output {
+  margin-top: 1rem;
+}
+
+.CodeEditor__output h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.CodeEditor__output pre {
+  font-size: 1.1rem;
+  height: 200px;
+  background-color: #f0f0f0;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

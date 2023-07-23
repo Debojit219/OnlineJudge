@@ -1,0 +1,19 @@
+{
+  "name": "code-editor-backend",
+  "version": "1.0.0",
+  "description": "This is a backend of a code editor that takes the code from the front end, compiles it, runs it against input test case files, compare the result with the expected file results and return the status back.",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Debojit Banerjee",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.0",
+    "multer": "^1.4.4",
+    "multer-gridfs-storage": "^5.0.2"
+  }
+}
