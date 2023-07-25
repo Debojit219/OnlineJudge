@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const problemsRouter = require("./routes/problem");
+const judgeRouter = require("./routes/judge");
 const cors = require("cors");
 require("./db/dbConnection");
 require("dotenv").config();
@@ -11,8 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Mount the problems router
 app.use("/api/problems", problemsRouter);
+app.use("/api/compile", judgeRouter);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

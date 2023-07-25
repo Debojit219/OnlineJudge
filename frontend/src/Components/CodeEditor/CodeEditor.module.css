@@ -84,3 +84,48 @@
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+.CodeEditor__customInput {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+  width: 100%; /* Change this to 100% to occupy entire width */
+  height: 100px; /* Set the desired height here (e.g., 400px) */
+  min-height: 0; /* Reset min-height to allow the textarea to shrink */
+}
+
+.CodeEditor__verdict {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 600px;
+}
+
+.CodeEditor__verdict h3 {
+  margin-bottom: 10px;
+}
+
+.CodeEditor__verdict pre {
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 10px;
+  border-radius: 5px;
+  max-width: 100%;
+}
+
+/* Custom colors for different verdicts */
+.CodeEditor__verdict pre.AC {
+  background-color: #c7e5c2; /* Light green for Accepted (AC) */
+}
+
+.CodeEditor__verdict pre.WA {
+  background-color: #ffc2c2; /* Light red for Wrong Answer (WA) */
+}
+
+.CodeEditor__verdict pre.TLE {
+  background-color: #ffd699; /* Light orange for Time Limit Exceeded (TLE) */
+}

@@ -1,43 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Paper, TextField, Box, Typography } from "@mui/material";
-import { useDropzone } from "react-dropzone";
-
-const CustomDropzone = ({
-  onFileChange,
-  acceptedFiles,
-  testCaseFileDescription,
-}) => {
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => onFileChange(acceptedFiles[0]),
-    accept: acceptedFiles,
-    multiple: false,
-  });
-
-  return (
-    <Box mb={2}>
-      <Typography variant="subtitle1">
-        Upload {testCaseFileDescription} Text File:
-      </Typography>
-      <div
-        {...getRootProps()}
-        style={{
-          borderWidth: "2px",
-          borderColor: "gray",
-          borderStyle: "dashed",
-          borderRadius: "10px",
-          padding: "20px",
-          textAlign: "center",
-          cursor: "pointer",
-          margin: "5px",
-        }}
-      >
-        <input {...getInputProps()} />
-        <p>Drag and drop a file here, or click to select a file</p>
-      </div>
-    </Box>
-  );
-};
+import { Button, Paper, TextField, Box, Typography, Grid } from "@mui/material";
+import FileDropZone from "../../Components/CustomDropzone/CustomDropzone";
+import SuccessPopup from "../../Components/Popup/SuccessPopup";
 
 const Form = () => {
   const [title, setTitle] = useState("");
@@ -52,6 +17,7 @@ const Form = () => {
   const [trivialOutputFile, setTrivialOutputFile] = useState(null);
   const [correctnessOutputFile, setCorrectnessOutputFile] = useState(null);
   const [efficiencyOutputFile, setEfficiencyOutputFile] = useState(null);
+  const [problemCreated, setProblemCreated] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,17 +48,16 @@ const Form = () => {
         }
       );
       console.log("Problem created successfully:", response.data);
-      // You can add a redirect or success message here
+      setProblemCreated(true);
     } catch (error) {
       console.error("Error creating problem:", error);
-      // Handle error here
     }
   };
 
   return (
-    <Box component={Paper} p={4} maxWidth={600} mx="auto" mt={4}>
+    <Box component={Paper} p={4} maxWidth={900} mx="auto" mt={4}>
       <Typography variant="h5" gutterBottom>
-        Problem Form
+        Create Problem Form
       </Typography>
       <TextField
         label="Title"
@@ -185,47 +150,54 @@ const Form = () => {
         }}
       />
 
-      <Box display="flex">
-        <CustomDropzone
-          onFileChange={setTrivialFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Trivial Input"
-        />
-        <CustomDropzone
-          onFileChange={setTrivialOutputFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Trivial Output"
-        />
-      </Box>
-
-      <Box display="flex">
-        <CustomDropzone
-          onFileChange={setCorrectnessFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Correctness Input"
-        />
-        <CustomDropzone
-          onFileChange={setCorrectnessOutputFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Correctness Output"
-        />
-      </Box>
-
-      <Box display="flex">
-        <CustomDropzone
-          onFileChange={setEfficiencyFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Efficiency Input"
-        />
-        <CustomDropzone
-          onFileChange={setEfficiencyOutputFile}
-          acceptedFiles={[".txt"]}
-          testCaseFileDescription="Efficiency Output"
-        />
-      </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setTrivialFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Trivial Input"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setTrivialOutputFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Trivial Output"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setCorrectnessFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Correctness Input"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setCorrectnessOutputFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Correctness Output"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setEfficiencyFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Efficiency Input"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setEfficiencyOutputFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Efficiency Output"
+          />
+        </Grid>
+      </Grid>
       <Button variant="contained" color="primary" onClick={handleSubmit}>
         Submit
       </Button>
+      {problemCreated && <SuccessPopup />}
     </Box>
   );
 };

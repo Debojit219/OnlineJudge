@@ -9,30 +9,31 @@
 
 /* Heading style */
 .ProblemStatement h2 {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
-  color: #333; /* You can adjust the color */
+  color: #1a237e; /* Dark blue color for heading */
 }
 
 /* Main problem text style */
 .ProblemStatement__text {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin: 1rem 0;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
 /* Example input/output and constraints style */
 .ProblemStatement h3 {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: #333; /* You can adjust the color */
+  color: #1565c0; /* Blue color for subheadings */
 }
 
 .ProblemStatement__example,
 .ProblemStatement__constraints {
-  font-size: 1.1rem;
-  line-height: 1.5;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
 }
 
 .ProblemStatement__example span,
@@ -42,7 +43,7 @@
 
 /* Explanation style */
 .ProblemStatement__explanation {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #333; /* You can adjust the color */
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: #333; /* Default text color */
 }

@@ -1,0 +1,37 @@
+.dropzone-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100px; /* Set a fixed height for the container div */
+  border: 2px dashed gray;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  margin: 5px;
+  transition: border-color 0.3s;
+  position: relative; /* To position the tick mark */
+}
+
+.dropzone-container:hover {
+  border-color: green;
+}
+
+.uploaded-text {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: 50px; /* Adjust the position as needed */
+  left: 50%; /* Center horizontally within the container */
+  transform: translateX(-50%); /* Center horizontally within the container */
+}
+
+.uploaded-icon {
+  color: green;
+  font-size: 36px;
+  margin-right: 10px;
+}
+
+.uploaded-text > p {
+  margin: 0;
+}

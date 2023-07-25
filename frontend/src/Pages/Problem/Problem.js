@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import ProblemStatement from "../Components/ProblemStatement/ProblemStatement";
-import CodeEditor from "../Components/CodeEditor/CodeEditor";
+import ProblemStatement from "../../Components/ProblemStatement/ProblemStatement";
+import CodeEditor from "../../Components/CodeEditor/CodeEditor";
 
 function Problem() {
   const [problemStatement, setProblemStatement] = useState("");
@@ -13,6 +13,7 @@ function Problem() {
 
   useEffect(() => {
     fetchProblemDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchProblemDetails = async () => {
@@ -44,14 +45,13 @@ function Problem() {
 
   return (
     <>
-      <h1>Online Coding Platform!</h1>
       <ProblemStatement
         problemStatement={problemStatement}
         constraints={constraint}
         inputoutput={inputoutput}
         explanation={explanation}
       />
-      <CodeEditor style={{ overflow: "hidden" }} />
+      <CodeEditor problemId={id} style={{ overflow: "hidden" }} />
     </>
   );
 }

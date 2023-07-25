@@ -1,0 +1,52 @@
+/* HomePage.module.css */
+
+.HomePage {
+    padding: 2rem;
+  }
+  
+  .HomePage h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+  }
+  
+  .HomePage h2 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .HomePage h2 a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .HomePage h2 a:hover {
+    color: #555;
+  }
+  .ProblemList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .ProblemList li {
+    padding: 1rem;
+  }
+  
+  .EvenRow {
+    background-color: #f2f2f2; /* Alternate background color for even rows */
+  }
+  
+  .OddRow {
+    background-color: #e8e8e8; /* Alternate background color for odd rows */
+  }  
+
+  .Link {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .Link:hover {
+    text-decoration: underline;
+  }
