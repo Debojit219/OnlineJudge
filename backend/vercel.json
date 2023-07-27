@@ -3,13 +3,13 @@
     "name": "Online_Judge_API",
     "builds": [
       {
-        "src": "App.js",
-        "use": "@now/node"
+        "src": "./App.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       {
-        "src": "/(.*)",
+        "src": "/.*",
         "dest": "App.js"
       }
     ]
