@@ -8,9 +8,11 @@ const Home = () => {
 
   useEffect(() => {
     // Fetch the list of problems from the backend API
-    axios.get("http://localhost:8000/api/problems/getall").then((response) => {
-      setProblems(response.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_SERVER_PORT}api/problems/getall`)
+      .then((response) => {
+        setProblems(response.data);
+      });
   }, []);
 
   return (

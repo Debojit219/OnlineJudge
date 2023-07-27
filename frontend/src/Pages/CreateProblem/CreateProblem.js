@@ -31,7 +31,7 @@ const Form = () => {
     try {
       console.log(formData);
       const response = await axios.post(
-        "http://localhost:8000/api/problems/create",
+        `${process.env.REACT_APP_SERVER_PORT}api/problems/create`,
         formData,
         {
           headers: {

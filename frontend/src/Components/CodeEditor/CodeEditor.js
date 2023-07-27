@@ -32,7 +32,10 @@ const CodeEditor = ({ problemId }) => {
 
     try {
       await axios
-        .post(`http://localhost:8000/api/compile/judge0/submit`, payload)
+        .post(
+          `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/submit`,
+          payload
+        )
         .then((response) => {
           console.log("Problem details fetched successfully:", response.data);
           console.log(atob(response.data.stdout));
@@ -53,7 +56,10 @@ const CodeEditor = ({ problemId }) => {
 
     try {
       await axios
-        .post(`http://localhost:8000/api/compile/judge0/runtest`, payload)
+        .post(
+          `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/runtest`,
+          payload
+        )
         .then((response) => {
           console.log("Problem details fetched successfully:", response.data);
           setErrorMessage(

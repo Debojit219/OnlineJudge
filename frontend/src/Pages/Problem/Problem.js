@@ -19,7 +19,7 @@ function Problem() {
   const fetchProblemDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/problems/${id}`
+        `${process.env.REACT_APP_SERVER_PORT}api/problems/${id}`
       );
 
       setProblemStatement(
