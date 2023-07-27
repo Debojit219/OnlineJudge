@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "name": "Online_Judge_API",
+    "builds": [
+      {
+        "src": "App.js",
+        "use": "@now/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "App.js"
+      }
+    ]
+  }

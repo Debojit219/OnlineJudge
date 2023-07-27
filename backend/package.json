@@ -4,6 +4,7 @@
   "description": "This is a backend of a code editor that takes the code from the front end, compiles it, runs it against input test case files, compare the result with the expected file results and return the status back.",
   "main": "App.js",
   "scripts": {
+    "start": "node App.js", 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Debojit Banerjee",
