@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./CodeEditor.module.css";
 
@@ -8,6 +7,7 @@ const CodeEditor = ({ problemId }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(62);
   const [customInput, setCustomInput] = useState("");
   const [output, setOutput] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [verdict, setVerdict] = useState("");
 
   const handleCodeChange = (event) => {
@@ -26,14 +26,13 @@ const CodeEditor = ({ problemId }) => {
     const payload = {
       sourceCode: code,
       languageId: selectedLanguage,
-      customInput: null,
       problemId: problemId,
     };
     console.log(payload);
 
     try {
       await axios
-        .post(`http://localhost:8000/api/compile/judge0`, payload)
+        .post(`http://localhost:8000/api/compile/judge0/submit`, payload)
         .then((response) => {
           console.log("Problem details fetched successfully:", response.data);
           console.log(atob(response.data.stdout));
@@ -49,17 +48,21 @@ const CodeEditor = ({ problemId }) => {
       sourceCode: code,
       languageId: selectedLanguage,
       customInput: customInput,
-      problemId: problemId,
     };
     console.log(payload);
 
     try {
       await axios
-        .post(`http://localhost:8000/api/compile/judge0`, payload)
+        .post(`http://localhost:8000/api/compile/judge0/runtest`, payload)
         .then((response) => {
           console.log("Problem details fetched successfully:", response.data);
+          setErrorMessage(
+            atob(response.data.stderr == null ? "" : response.data.stderr)
+          );
           console.log(atob(response.data.stdout));
-          setOutput(atob(response.data.stdout));
+          setOutput(
+            atob(response.data.stdout == null ? "" : response.data.stdout)
+          );
         });
     } catch (error) {
       console.error("Error fetching problem details:", error);
@@ -78,7 +81,7 @@ const CodeEditor = ({ problemId }) => {
           <option value="62">Java</option>
           <option value="54">C++</option>
           <option value="71">Python</option>
-          <option value="71">JavaScript</option>
+          <option value="63">JavaScript</option>
           <option value="54">C</option>
         </select>
       </div>
@@ -111,6 +114,7 @@ const CodeEditor = ({ problemId }) => {
       />
       <div className={styles.CodeEditor__output}>
         <h3>Output:</h3>
+        <pre>{errorMessage}</pre>
         <pre>{output}</pre>
       </div>
       <div className={styles.CodeEditor__verdict}>

@@ -11,12 +11,8 @@ const Form = () => {
   const [inputoutput, setInputoutput] = useState("");
   const [explanation, setExplanation] = useState("");
   const [solutionCode, setSolutionCode] = useState("");
-  const [trivialFile, setTrivialFile] = useState(null);
-  const [correctnessFile, setCorrectnessFile] = useState(null);
-  const [efficiencyFile, setEfficiencyFile] = useState(null);
-  const [trivialOutputFile, setTrivialOutputFile] = useState(null);
-  const [correctnessOutputFile, setCorrectnessOutputFile] = useState(null);
-  const [efficiencyOutputFile, setEfficiencyOutputFile] = useState(null);
+  const [inputTestCaseFile, setInputTestCaseFile] = useState(null);
+  const [outputTestCaseFile, setOutputTestCaseFile] = useState(null);
   const [problemCreated, setProblemCreated] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -29,12 +25,8 @@ const Form = () => {
     formData.append("inputoutput", inputoutput);
     formData.append("explanation", explanation);
     formData.append("solutionCode", solutionCode);
-    formData.append("trivial", trivialFile);
-    formData.append("correctness", correctnessFile);
-    formData.append("efficiency", efficiencyFile);
-    formData.append("trivialOutput", trivialOutputFile);
-    formData.append("correctnessOutput", correctnessOutputFile);
-    formData.append("efficiencyOutput", efficiencyOutputFile);
+    formData.append("inputTestCaseFile", inputTestCaseFile);
+    formData.append("outputFile", outputTestCaseFile);
 
     try {
       console.log(formData);
@@ -153,44 +145,16 @@ const Form = () => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <FileDropZone
-            onFileChange={setTrivialFile}
+            onFileChange={setInputTestCaseFile}
             acceptedFiles={[".txt"]}
-            testCaseFileDescription="Trivial Input"
+            testCaseFileDescription="Input"
           />
         </Grid>
         <Grid item xs={6}>
           <FileDropZone
-            onFileChange={setTrivialOutputFile}
+            onFileChange={setOutputTestCaseFile}
             acceptedFiles={[".txt"]}
-            testCaseFileDescription="Trivial Output"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FileDropZone
-            onFileChange={setCorrectnessFile}
-            acceptedFiles={[".txt"]}
-            testCaseFileDescription="Correctness Input"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FileDropZone
-            onFileChange={setCorrectnessOutputFile}
-            acceptedFiles={[".txt"]}
-            testCaseFileDescription="Correctness Output"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FileDropZone
-            onFileChange={setEfficiencyFile}
-            acceptedFiles={[".txt"]}
-            testCaseFileDescription="Efficiency Input"
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <FileDropZone
-            onFileChange={setEfficiencyOutputFile}
-            acceptedFiles={[".txt"]}
-            testCaseFileDescription="Efficiency Output"
+            testCaseFileDescription="Output"
           />
         </Grid>
       </Grid>

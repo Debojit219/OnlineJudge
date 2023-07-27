@@ -6,14 +6,12 @@ const testCasesSchema = new mongoose.Schema({
     ref: "Problem",
   },
   inputTestCases: {
-    trivial: String,
-    correctness: String,
-    efficiency: String,
+    type: String,
+    required: true,
   },
   expectedOutputs: {
-    trivial: String,
-    correctness: String,
-    efficiency: String,
+    type: String,
+    required: true,
   },
 });
 

@@ -12,12 +12,8 @@ const upload = multer();
 router.post(
   "/create",
   upload.fields([
-    { name: "trivial", maxCount: 1 },
-    { name: "correctness", maxCount: 1 },
-    { name: "efficiency", maxCount: 1 },
-    { name: "trivialOutput", maxCount: 1 },
-    { name: "correctnessOutput", maxCount: 1 },
-    { name: "efficiencyOutput", maxCount: 1 },
+    { name: "inputTestCaseFile", maxCount: 1 },
+    { name: "outputFile", maxCount: 1 },
   ]),
   async (req, res) => {
     try {
@@ -29,16 +25,11 @@ router.post(
         explanation,
         solutionCode,
       } = req.body;
-      const inputTestCases = {
-        trivial: req.files["trivial"][0].buffer.toString(),
-        correctness: req.files["correctness"][0].buffer.toString(),
-        efficiency: req.files["efficiency"][0].buffer.toString(),
-      };
-      const expectedOutputs = {
-        trivial: req.files["trivialOutput"][0].buffer.toString(),
-        correctness: req.files["correctnessOutput"][0].buffer.toString(),
-        efficiency: req.files["efficiencyOutput"][0].buffer.toString(),
-      };
+      const inputTestCases =
+        req.files["inputTestCaseFile"][0].buffer.toString();
+
+      const expectedOutputs = req.files["outputFile"][0].buffer.toString();
+
       const problemStatement = {
         statement: statement,
         constraint: constraint,
