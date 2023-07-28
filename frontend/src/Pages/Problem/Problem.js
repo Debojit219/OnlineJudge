@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ProblemStatement from "../../Components/ProblemStatement/ProblemStatement";
 import CodeEditor from "../../Components/CodeEditor/CodeEditor";
+import ScoreBoard from "../../Components/ScoreBoard/ScoreBoard";
 
 function Problem() {
   const [problemStatement, setProblemStatement] = useState("");
   const [constraint, setConstraint] = useState("");
   const [inputoutput, setInputoutput] = useState("");
   const [explanation, setExplanation] = useState("");
+  const [totalScore, setTotalScore] = useState(0);
   const { id } = useParams();
 
   useEffect(() => {
@@ -45,6 +47,7 @@ function Problem() {
 
   return (
     <>
+      <ScoreBoard totalScore={totalScore} />
       <ProblemStatement
         problemStatement={problemStatement}
         constraints={constraint}
