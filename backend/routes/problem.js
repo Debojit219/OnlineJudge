@@ -12,8 +12,12 @@ const upload = multer();
 router.post(
   "/create",
   upload.fields([
-    { name: "inputTestCaseFile", maxCount: 1 },
-    { name: "outputFile", maxCount: 1 },
+    { name: "trivialInputTestFile", maxCount: 1 },
+    { name: "trivialOutputTestFile", maxCount: 1 },
+    { name: "correctnessInputTestFile", maxCount: 1 },
+    { name: "correctnessOutputTestFile", maxCount: 1 },
+    { name: "efficiencyInputTestFile", maxCount: 1 },
+    { name: "efficiencyOutputTestFile", maxCount: 1 },
   ]),
   async (req, res) => {
     try {
@@ -25,10 +29,20 @@ router.post(
         explanation,
         solutionCode,
       } = req.body;
-      const inputTestCases =
-        req.files["inputTestCaseFile"][0].buffer.toString();
+      const trivialInputTestFile =
+        req.files["trivialInputTestFile"][0].buffer.toString();
+      const trivialOutputTestFile =
+        req.files["trivialOutputTestFile"][0].buffer.toString();
 
-      const expectedOutputs = req.files["outputFile"][0].buffer.toString();
+      const correctnessInputTestFile =
+        req.files["correctnessInputTestFile"][0].buffer.toString();
+      const correctnessOutputTestFile =
+        req.files["correctnessOutputTestFile"][0].buffer.toString();
+
+      const efficiencyInputTestFile =
+        req.files["efficiencyInputTestFile"][0].buffer.toString();
+      const efficiencyOutputTestFile =
+        req.files["efficiencyOutputTestFile"][0].buffer.toString();
 
       const problemStatement = {
         statement: statement,
@@ -48,8 +62,18 @@ router.post(
 
       const newTestCases = new TestCases({
         problemId,
-        inputTestCases,
-        expectedOutputs,
+        trivial: {
+          input: trivialInputTestFile,
+          expected_output: trivialOutputTestFile,
+        },
+        correctness: {
+          input: correctnessInputTestFile,
+          expected_output: correctnessOutputTestFile,
+        },
+        efficiency: {
+          input: efficiencyInputTestFile,
+          expected_output: efficiencyOutputTestFile,
+        },
       });
 
       await newProblem.save();

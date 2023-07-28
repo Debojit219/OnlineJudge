@@ -11,8 +11,15 @@ const Form = () => {
   const [inputoutput, setInputoutput] = useState("");
   const [explanation, setExplanation] = useState("");
   const [solutionCode, setSolutionCode] = useState("");
-  const [inputTestCaseFile, setInputTestCaseFile] = useState(null);
-  const [outputTestCaseFile, setOutputTestCaseFile] = useState(null);
+  const [trivialInputTestFile, setTrivialInputTestFile] = useState(null);
+  const [trivialOutputTestFile, setTrivialOutputTestFile] = useState(null);
+  const [correctnessInputTestFile, setCorrectnessInputTestFile] =
+    useState(null);
+  const [correctnessOutputTestFile, setCorrectnessOutputTestFile] =
+    useState(null);
+  const [efficiencyInputTestFile, setEfficiencyInputTestFile] = useState(null);
+  const [efficiencyOutputTestFile, setEfficiencyOutputTestFile] =
+    useState(null);
   const [problemCreated, setProblemCreated] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -25,11 +32,18 @@ const Form = () => {
     formData.append("inputoutput", inputoutput);
     formData.append("explanation", explanation);
     formData.append("solutionCode", solutionCode);
-    formData.append("inputTestCaseFile", inputTestCaseFile);
-    formData.append("outputFile", outputTestCaseFile);
+
+    formData.append("trivialInputTestFile", trivialInputTestFile);
+    formData.append("trivialOutputTestFile", trivialOutputTestFile);
+
+    formData.append("correctnessInputTestFile", correctnessInputTestFile);
+    formData.append("correctnessOutputTestFile", correctnessOutputTestFile);
+
+    formData.append("efficiencyInputTestFile", efficiencyInputTestFile);
+    formData.append("efficiencyOutputTestFile", efficiencyOutputTestFile);
 
     try {
-      console.log(formData);
+      // console.log(formData);
       const response = await axios.post(
         `${process.env.REACT_APP_SERVER_PORT}api/problems/create`,
         formData,
@@ -39,7 +53,7 @@ const Form = () => {
           },
         }
       );
-      console.log("Problem created successfully:", response.data);
+      // console.log("Problem created successfully:", response.data);
       setProblemCreated(true);
     } catch (error) {
       console.error("Error creating problem:", error);
@@ -145,16 +159,48 @@ const Form = () => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <FileDropZone
-            onFileChange={setInputTestCaseFile}
+            onFileChange={setTrivialInputTestFile}
             acceptedFiles={[".txt"]}
-            testCaseFileDescription="Input"
+            testCaseFileDescription="Trivial Input"
           />
         </Grid>
         <Grid item xs={6}>
           <FileDropZone
-            onFileChange={setOutputTestCaseFile}
+            onFileChange={setTrivialOutputTestFile}
             acceptedFiles={[".txt"]}
-            testCaseFileDescription="Output"
+            testCaseFileDescription="Trivial Output"
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setCorrectnessInputTestFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Correctness Input"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setCorrectnessOutputTestFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Correctness Output"
+          />
+        </Grid>
+      </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setEfficiencyInputTestFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Efficiency Input"
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <FileDropZone
+            onFileChange={setEfficiencyOutputTestFile}
+            acceptedFiles={[".txt"]}
+            testCaseFileDescription="Efficiency Output"
           />
         </Grid>
       </Grid>

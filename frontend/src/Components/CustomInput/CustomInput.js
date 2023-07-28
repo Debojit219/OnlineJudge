@@ -8,7 +8,7 @@ const CustomInput = ({ customInput, setCustomInput }) => {
   };
 
   const handleChangeCheckbox = (event) => {
-    console.log(event.target.checked);
+    // console.log(event.target.checked);
     setCustomInputNeeded(event.target.checked);
   };
   return (
