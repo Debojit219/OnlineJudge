@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./CodeEditor.module.css";
+import CustomInput from "../CustomInput/CustomInput";
 
 const CodeEditor = ({ problemId }) => {
   const [code, setCode] = useState("");
@@ -8,6 +9,7 @@ const CodeEditor = ({ problemId }) => {
   const [customInput, setCustomInput] = useState("");
   const [output, setOutput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [compile_output, setCompileOutput] = useState("");
   const [verdict, setVerdict] = useState("");
 
   const handleCodeChange = (event) => {
@@ -18,31 +20,38 @@ const CodeEditor = ({ problemId }) => {
     setSelectedLanguage(event.target.value);
   };
 
-  const handleCustomInputChange = (event) => {
-    setCustomInput(event.target.value);
-  };
-
   const handleSubmit = async () => {
-    const payload = {
-      sourceCode: code,
-      languageId: selectedLanguage,
-      problemId: problemId,
-    };
-    console.log(payload);
+    if (code != "") {
+      const payload = {
+        sourceCode: code,
+        languageId: selectedLanguage,
+        problemId: problemId,
+      };
+      console.log(payload);
 
-    try {
-      await axios
-        .post(
-          `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/submit`,
-          payload
-        )
-        .then((response) => {
-          console.log("Problem details fetched successfully:", response.data);
-          console.log(atob(response.data.stdout));
-          setVerdict(response.data.status.description);
-        });
-    } catch (error) {
-      console.error("Error fetching problem details:", error);
+      try {
+        await axios
+          .post(
+            `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/submit`,
+            payload
+          )
+          .then((response) => {
+            console.log("Problem details fetched successfully:", response.data);
+            setErrorMessage(
+              atob(response.data.stderr == null ? "" : response.data.stderr)
+            );
+            setCompileOutput(
+              atob(
+                response.data.compile_output == null
+                  ? ""
+                  : response.data.compile_output
+              )
+            );
+            setVerdict(response.data.status.description);
+          });
+      } catch (error) {
+        console.error("Error fetching problem details:", error);
+      }
     }
   };
 
@@ -61,14 +70,25 @@ const CodeEditor = ({ problemId }) => {
           payload
         )
         .then((response) => {
-          console.log("Problem details fetched successfully:", response.data);
-          setErrorMessage(
-            atob(response.data.stderr == null ? "" : response.data.stderr)
-          );
-          console.log(atob(response.data.stdout));
-          setOutput(
-            atob(response.data.stdout == null ? "" : response.data.stdout)
-          );
+          // console.log("Problem details fetched successfully:", response.data);
+          if (response.data.status.id !== 3) {
+            setOutput("");
+            setErrorMessage(
+              atob(response.data.stderr == null ? "" : response.data.stderr)
+            );
+            setCompileOutput(
+              atob(
+                response.data.compile_output == null
+                  ? ""
+                  : response.data.compile_output
+              )
+            );
+            console.log(atob(response.data.compile_output));
+          } else {
+            setErrorMessage("");
+            setCompileOutput("");
+            setOutput(atob(response.data.stdout));
+          }
         });
     } catch (error) {
       console.error("Error fetching problem details:", error);
@@ -111,17 +131,14 @@ const CodeEditor = ({ problemId }) => {
           Submit Code
         </button>
       </div>
-      <h3>Custom Input:</h3>
-      <textarea
-        onChange={handleCustomInputChange}
-        className={styles.CodeEditor__customInput}
-        value={customInput}
-        placeholder="Enter your custom input here..."
-      />
+      <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
       <div className={styles.CodeEditor__output}>
         <h3>Output:</h3>
-        <pre>{errorMessage}</pre>
-        <pre>{output}</pre>
+        <pre>
+          {errorMessage}
+          {output}
+          {compile_output}
+        </pre>
       </div>
       <div className={styles.CodeEditor__verdict}>
         <h3>Verdict</h3>
