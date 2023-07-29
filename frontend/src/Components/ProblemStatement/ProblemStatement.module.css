@@ -47,3 +47,72 @@
   line-height: 1.8;
   color: #333; /* Default text color */
 }
+
+/* Solution section styles */
+
+.ProblemStatement button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  float: right;
+  margin-top: 10px;
+}
+
+.ProblemStatement button:hover {
+  background-color: #0056b3;
+}
+
+.ProblemStatement__solution {
+  /* Styles for the solution section */
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.ProblemStatement__solution h3 {
+  /* Styles for the solution heading */
+  margin-top: 0;
+}
+
+.ProblemStatement__solution pre {
+  /* Styles for the solution code block */
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  white-space: pre-wrap;
+  font-size: 14px;
+}
+
+.ProblemStatement__solution button {
+  /* Styles for the "Show Solution" and "Hide Solution" buttons */
+  float: right;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ProblemStatement__solution button:hover {
+  /* Hover effect for the buttons */
+  background-color: #0056b3;
+}
+
+/* Style for the "Show Solution" button when the solution is shown */
+.ProblemStatement__solutionShown .ProblemStatement__solution button {
+  background-color: #dc3545; /* Red color for "Hide Solution" button */
+}
+
+/* Style for the "Hide Solution" button when the solution is hidden */
+.ProblemStatement__solutionHidden .ProblemStatement__solution button {
+  background-color: #007bff; /* Blue color for "Show Solution" button */
+}

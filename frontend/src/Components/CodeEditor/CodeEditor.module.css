@@ -85,17 +85,6 @@
   word-wrap: break-word;
 }
 
-.CodeEditor__customInput {
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
-  width: 100%; /* Change this to 100% to occupy entire width */
-  height: 100px; /* Set the desired height here (e.g., 400px) */
-  min-height: 0; /* Reset min-height to allow the textarea to shrink */
-}
-
 .CodeEditor__verdict {
   margin-top: 20px;
   padding: 10px;

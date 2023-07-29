@@ -1,0 +1,16 @@
+.scoreboard {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    padding: 10px;
+    margin: 10px;
+    background-color: #2B2B35;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    color: white; /* Change the text color to white for better visibility */
+  }
+  
+  

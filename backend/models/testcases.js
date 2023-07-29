@@ -5,13 +5,35 @@ const testCasesSchema = new mongoose.Schema({
     type: String,
     ref: "Problem",
   },
-  inputTestCases: {
-    type: String,
-    required: true,
+  trivial: {
+    input: {
+      type: String,
+      required: true,
+    },
+    expected_output: {
+      type: String,
+      required: true,
+    },
   },
-  expectedOutputs: {
-    type: String,
-    required: true,
+  correctness: {
+    input: {
+      type: String,
+      required: true,
+    },
+    expected_output: {
+      type: String,
+      required: true,
+    },
+  },
+  efficiency: {
+    input: {
+      type: String,
+      required: true,
+    },
+    expected_output: {
+      type: String,
+      required: true,
+    },
   },
 });
 

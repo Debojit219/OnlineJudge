@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./CodeEditor.module.css";
+import CustomInput from "../CustomInput/CustomInput";
 
-const CodeEditor = ({ problemId }) => {
+const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
   const [code, setCode] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState(62);
   const [customInput, setCustomInput] = useState("");
   const [output, setOutput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [verdict, setVerdict] = useState("");
+  const [compile_output, setCompileOutput] = useState("");
+  const [verdictTrivial, setVerdictTrivial] = useState("");
+  const [verdictCorrectness, setVerdictCorrectness] = useState("");
+  const [verdictEfficiency, setVerdictEfficiency] = useState("");
 
   const handleCodeChange = (event) => {
     setCode(event.target.value);
@@ -18,31 +22,67 @@ const CodeEditor = ({ problemId }) => {
     setSelectedLanguage(event.target.value);
   };
 
-  const handleCustomInputChange = (event) => {
-    setCustomInput(event.target.value);
-  };
-
   const handleSubmit = async () => {
-    const payload = {
-      sourceCode: code,
-      languageId: selectedLanguage,
-      problemId: problemId,
-    };
-    console.log(payload);
+    if (code !== "") {
+      const payload = {
+        sourceCode: code,
+        languageId: selectedLanguage,
+        problemId: problemId,
+      };
+      // console.log(payload);
 
-    try {
-      await axios
-        .post(
-          `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/submit`,
-          payload
-        )
-        .then((response) => {
-          console.log("Problem details fetched successfully:", response.data);
-          console.log(atob(response.data.stdout));
-          setVerdict(response.data.status.description);
-        });
-    } catch (error) {
-      console.error("Error fetching problem details:", error);
+      try {
+        await axios
+          .post(
+            `${process.env.REACT_APP_SERVER_PORT}api/compile/judge0/submit`,
+            payload
+          )
+          .then((response) => {
+            // console.log("Resposne for trivial:", response.data.resultTrivial);
+            // console.log(
+            //   "Resposne for trivial:",
+            //   response.data.resultCorrectness
+            // );
+            // console.log(
+            //   "Resposne for trivial:",
+            //   response.data.resultEfficiency
+            // );
+            setErrorMessage(
+              atob(
+                response.data.resultTrivial.stderr == null
+                  ? ""
+                  : response.data.resultTrivial.stderr
+              )
+            );
+            setCompileOutput(
+              atob(
+                response.data.resultTrivial.compile_output == null
+                  ? ""
+                  : response.data.resultTrivial.compile_output
+              )
+            );
+            setVerdictTrivial(response.data.resultTrivial.status.description);
+            if (response.data.resultTrivial.status.id === 3) {
+              setObtainedScore(20);
+            }
+
+            setVerdictCorrectness(
+              response.data.resultCorrectness.status.description
+            );
+            if (response.data.resultCorrectness.status.id === 3) {
+              setObtainedScore(50);
+            }
+
+            setVerdictEfficiency(
+              response.data.resultEfficiency.status.description
+            );
+            if (response.data.resultEfficiency.status.id === 3) {
+              setObtainedScore(100);
+            }
+          });
+      } catch (error) {
+        console.error("Error fetching problem details:", error);
+      }
     }
   };
 
@@ -52,7 +92,7 @@ const CodeEditor = ({ problemId }) => {
       languageId: selectedLanguage,
       customInput: customInput,
     };
-    console.log(payload);
+    // console.log(payload);
 
     try {
       await axios
@@ -61,14 +101,25 @@ const CodeEditor = ({ problemId }) => {
           payload
         )
         .then((response) => {
-          console.log("Problem details fetched successfully:", response.data);
-          setErrorMessage(
-            atob(response.data.stderr == null ? "" : response.data.stderr)
-          );
-          console.log(atob(response.data.stdout));
-          setOutput(
-            atob(response.data.stdout == null ? "" : response.data.stdout)
-          );
+          // console.log("Problem details fetched successfully:", response.data);
+          if (response.data.status.id !== 3) {
+            setOutput("");
+            setErrorMessage(
+              atob(response.data.stderr == null ? "" : response.data.stderr)
+            );
+            setCompileOutput(
+              atob(
+                response.data.compile_output == null
+                  ? ""
+                  : response.data.compile_output
+              )
+            );
+            // console.log(atob(response.data.compile_output));
+          } else {
+            setErrorMessage("");
+            setCompileOutput("");
+            setOutput(atob(response.data.stdout));
+          }
         });
     } catch (error) {
       console.error("Error fetching problem details:", error);
@@ -111,21 +162,26 @@ const CodeEditor = ({ problemId }) => {
           Submit Code
         </button>
       </div>
-      <h3>Custom Input:</h3>
-      <textarea
-        onChange={handleCustomInputChange}
-        className={styles.CodeEditor__customInput}
-        value={customInput}
-        placeholder="Enter your custom input here..."
-      />
+      <CustomInput customInput={customInput} setCustomInput={setCustomInput} />
       <div className={styles.CodeEditor__output}>
         <h3>Output:</h3>
-        <pre>{errorMessage}</pre>
-        <pre>{output}</pre>
+        <pre>
+          {errorMessage}
+          {output}
+          {compile_output}
+        </pre>
       </div>
       <div className={styles.CodeEditor__verdict}>
         <h3>Verdict</h3>
-        <pre className={styles[verdict]}>{verdict}</pre>
+        <pre className={styles[verdictTrivial]}>
+          Verdict Trivial: {verdictTrivial}
+        </pre>
+        <pre className={styles[verdictTrivial]}>
+          Verdict Correctness: {verdictCorrectness}
+        </pre>
+        <pre className={styles[verdictTrivial]}>
+          Verdict Efficiency: {verdictEfficiency}
+        </pre>
       </div>
     </div>
   );

@@ -100,23 +100,50 @@ router.post("/judge0/submit", async (req, res) => {
   const { sourceCode, languageId, problemId } = req.body;
 
   console.log(req.body);
-  const testCases = await TestCases.findOne({ problemId: problemId });
+  try {
+    const testCases = await TestCases.findOne({ problemId: problemId });
 
-  console.log(testCases);
-  const testCase = {
-    input: testCases.inputTestCases,
-    expected_output: testCases.expectedOutputs,
-  };
+    const testCaseTrivial = {
+      input: testCases.trivial.input,
+      expected_output: testCases.trivial.expected_output,
+    };
 
-  createSubmission(sourceCode, languageId, testCase)
-    .then((result) => {
-      // console.log("Submission created successfully:", result);
-      res.json(result);
-    })
-    .catch((error) => {
-      // console.error("Error creating submission:", error);
-      res.json(error);
-    });
+    const testCaseCorrectness = {
+      input: testCases.correctness.input,
+      expected_output: testCases.correctness.expected_output,
+    };
+
+    const testCaseEfficiency = {
+      input: testCases.efficiency.input,
+      expected_output: testCases.efficiency.expected_output,
+    };
+
+    console.log(
+      "Test Cases Fetched from Data Base successfully",
+      testCaseTrivial,
+      testCaseCorrectness
+    );
+
+    const [resultTrivial, resultCorrectness, resultEfficiency] =
+      await Promise.all([
+        createSubmission(sourceCode, languageId, testCaseTrivial),
+        createSubmission(sourceCode, languageId, testCaseCorrectness),
+        createSubmission(sourceCode, languageId, testCaseEfficiency),
+      ]);
+
+    // Combine the results in a single object
+    const combinedResults = {
+      resultTrivial,
+      resultCorrectness,
+      resultEfficiency,
+    };
+
+    console.log(combinedResults);
+    res.json(combinedResults);
+  } catch (error) {
+    console.error("Error creating submissions:", error);
+    res.json(error);
+  }
 });
 
 /*
