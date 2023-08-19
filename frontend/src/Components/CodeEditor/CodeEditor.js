@@ -19,13 +19,14 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
   const handleLanguageChange = (event) => {
     const code = event.target.value
     setSelectedLanguageCode(code);
-    if (code === 62) {
+    console.log(code);
+    if (code == 62) {
       setLanguage('java');
-    } else if (code === 54) {
+    } else if (code == 54) {
       setLanguage('cpp');
-    } else if (code === 71) {
+    } else if (code == 71) {
       setLanguage('python');
-    } else if (code === 63) {
+    } else if (code == 63) {
       setLanguage('javascript');
     }
   };
@@ -91,7 +92,6 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
       languageId: selectedLanguageCode,
       customInput: customInput,
     };
-    // console.log(payload);
 
     try {
       await axios
@@ -100,7 +100,6 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
           payload
         )
         .then((response) => {
-          // console.log("Problem details fetched successfully:", response.data);
           if (response.data.status.id !== 3) {
             setOutput("");
             setErrorMessage(
@@ -113,7 +112,6 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
                   : response.data.compile_output
               )
             );
-            // console.log(atob(response.data.compile_output));
           } else {
             setErrorMessage("");
             setCompileOutput("");
