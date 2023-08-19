@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./CodeEditor.module.css";
 import CustomInput from "../CustomInput/CustomInput";
+import CodeEditorTextArea from "./CodeEditorTextArea";
 
 const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
   const [code, setCode] = useState("");
-  const [selectedLanguage, setSelectedLanguage] = useState(62);
+  const [selectedLanguageCode, setSelectedLanguageCode] = useState(62);
+  const [language, setLanguage] = useState("java");
   const [customInput, setCustomInput] = useState("");
   const [output, setOutput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,22 +16,28 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
   const [verdictCorrectness, setVerdictCorrectness] = useState("");
   const [verdictEfficiency, setVerdictEfficiency] = useState("");
 
-  const handleCodeChange = (event) => {
-    setCode(event.target.value);
-  };
-
   const handleLanguageChange = (event) => {
-    setSelectedLanguage(event.target.value);
+    const code = event.target.value
+    setSelectedLanguageCode(code);
+    if (code === 62) {
+      setLanguage('java');
+    } else if (code === 54) {
+      setLanguage('cpp');
+    } else if (code === 71) {
+      setLanguage('python');
+    } else if (code === 63) {
+      setLanguage('javascript');
+    }
   };
 
   const handleSubmit = async () => {
     if (code !== "") {
       const payload = {
         sourceCode: code,
-        languageId: selectedLanguage,
+        languageId: selectedLanguageCode,
         problemId: problemId,
       };
-      // console.log(payload);
+      console.log(payload);
 
       try {
         await axios
@@ -38,15 +46,6 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
             payload
           )
           .then((response) => {
-            // console.log("Resposne for trivial:", response.data.resultTrivial);
-            // console.log(
-            //   "Resposne for trivial:",
-            //   response.data.resultCorrectness
-            // );
-            // console.log(
-            //   "Resposne for trivial:",
-            //   response.data.resultEfficiency
-            // );
             setErrorMessage(
               atob(
                 response.data.resultTrivial.stderr == null
@@ -89,7 +88,7 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
   const handleRunTest = async () => {
     const payload = {
       sourceCode: code,
-      languageId: selectedLanguage,
+      languageId: selectedLanguageCode,
       customInput: customInput,
     };
     // console.log(payload);
@@ -132,22 +131,19 @@ const CodeEditor = ({ problemId, obtainedScore, setObtainedScore }) => {
         <label htmlFor="language">Select Language:</label>
         <select
           id="language"
-          value={selectedLanguage}
+          value={selectedLanguageCode}
           onChange={handleLanguageChange}
         >
           <option value="62">Java</option>
           <option value="54">C++</option>
           <option value="71">Python</option>
           <option value="63">JavaScript</option>
-          <option value="54">C</option>
+          <option value="54 ">C</option>
         </select>
       </div>
-      <textarea
-        className={styles.CodeEditor__textarea}
-        value={code}
-        onChange={handleCodeChange}
-        placeholder="Enter your code here..."
-      />
+
+      <CodeEditorTextArea language={language} code={code} setCode={setCode} />
+
       <div className={styles.CodeEditor__buttons}>
         <button
           className={styles.CodeEditor__runButton}
